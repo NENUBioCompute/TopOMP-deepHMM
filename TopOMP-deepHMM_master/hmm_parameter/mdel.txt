@@ -1,0 +1,3 @@
+M01 n01 m01 n02 m02 n03 m03 n04 m04 n05 m05 n06 m06 n07 m07 n08 M02 O10 O06 O07 O08 O09 O19 o01 O11 O12 O13 O14 O15 O16 M11 n11 m11 n12 m12 n13 m13 n14 m14 n15 m15 n16 m16 n17 m17 n18 M12 I01 I02 I03 I04 I05 I06 i01 I00 I07 I08 I09 I10 I11
+M   n   m   n   m   n   m   n   m   n   m   n   m   n   m   n   M   O   O   O   O   O   O   o   O   O   O   O   O   O   M   n   m   n   m   n   m   n   m   n   m   n   m   n   m   n   M   I   I   I   I   I   I   i   I   I   I   I   I   I
+M   M   M   M   M   M   M   M   M   M   M   M   M   M   M   M   M   O   O   O   O   O   O   O   O   O   O   O   O   O   M   M   M   M   M   M   M   M   M   M   M   M   M   M   M   M   M   I   I   I   I   I   I   I   I   I   I   I   I   I

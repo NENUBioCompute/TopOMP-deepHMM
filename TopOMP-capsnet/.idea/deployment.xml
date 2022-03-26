@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="PublishConfigData" autoUpload="Always" serverName="root@hz-t3.matpool.com:29354">
+    <serverData>
+      <paths name="gpu">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="mist@gpu08.mistgpu.xyz:18000">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/caps" local="$PROJECT_DIR$" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="mist@ygg.mistgpu.xyz:61510">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/caps" local="$PROJECT_DIR$" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="mist@ygg.mistgpu.xyz:61510 (1)">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/caps" local="$PROJECT_DIR$" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="root@hz-t3.matpool.com:29354">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/home/caps" local="$PROJECT_DIR$" />
+          </mappings>
+        </serverdata>
+      </paths>
+    </serverData>
+    <option name="myAutoUpload" value="ALWAYS" />
+  </component>
+</project>
