@@ -10,78 +10,9 @@ import numpy as np
 from sklearn.metrics import accuracy_score
 from sklearn.metrics import matthews_corrcoef
 
-#state and label
-mdel=open("./hmm_parameter/mdel.txt","r")
-state=mdel.readline().strip().split(" ")
-ostate=mdel.readline().strip().split("   ")
-pstate=mdel.readline().strip().split("   ")
-osym=["I","i","M","m","n","P","w","O","o","B","E"]
-psym=["I","M","O","B","E"]
-osym_dict= {'I': 0,'i': 1,'M': 2,'m': 3,'n': 4,'O': 5,'o': 6}
-psym_dict= {"I":0,"M":1,"O":2}
-
-K.set_image_data_format('channels_last')
-np.random.seed(0)
-# one-hot map
-dict_AA = {'C': 0, 'D': 1, 'S': 2, 'Q': 3, 'K': 4,
-        'I': 5, 'P': 6, 'T': 7, 'F': 8, 'N': 9,
-        'G': 10, 'H': 11, 'L': 12, 'R': 13, 'W': 14,
-        'A': 15, 'V': 16, 'E': 17, 'Y': 18, 'M': 19}
-
-def viterbi(A, Pi, Obser, state,count,y_pred):
-    row, col = len(Obser), 60
-    res = np.zeros((row, col))
-    res2 = np.zeros_like(res)
-    A, Pi = np.array(A),  np.array(Pi)
-    for w in range(0,col):
-        res[0,w]=y_pred[count][0][psym_dict[pstate[w]]]* Pi[w]
-    #res[0, :] =  B.T[0] * Pi #把第一个观测节点对应的各状态值计算出来
-    for i in range(1, row):
-        ob = Obser[i]
-        tempres, tempres2 = [], []
-        for j in range(col):
-            delta = A[:, j] * res[i - 1] * y_pred[count][i][psym_dict[pstate[j]]]
-            tempres2.append(np.argmax(A[:, j]*res[i - 1]))
-            tempres.append(np.max(delta))
-        res[i, :] = np.array(tempres)
-        res2[i, :] = np.array(tempres2)
-
-    result = []
-    result.append(np.argmax(res[row-1, :]))
-    i = row - 1
-    while i > 0:
-        result.append(res2[i][np.argmax(res[i, :])])
-        i -= 1
-    result.reverse()
-    return res, result
-
-def tm(l):
-    startM = []
-    endM = []
-    for i in range(len(l) - 1):
-        if l[i] != l[i + 1] and l[i + 1] == 1:
-            #print(i)
-            startM.append(i + 2)
-        if (l[i] != l[i + 1] and l[i] == 1):
-            #print(i)
-            endM.append(i + 1)
-    if l[len(l) - 1] == 1:
-        endM.append(len(l))
-    #print("startM", startM)
-    #print("endM", endM)
-    #print(len(endM))
-    return len(endM)
-
 
 def CapsNet(input_shape, n_class, num_routing):
-    """
-    A Capsule Network on MNIST.
-    :param input_shape: data shape, 3d, [width, height, channels]
-    :param n_class: number of classes
-    :param num_routing: number of routing iterations
-    :return: Two Keras Models, the first one used for training, and the second one for evaluation.
-            `eval_model` can also be used for training.
-    """
+  
     x = layers.Input(shape=input_shape)
     # print(x.shape)
     getindicelayer1 = Lambda(lambda x: x[:,:,:20])
@@ -267,67 +198,9 @@ if __name__ == "__main__":
     # train or test
 
     # model.load_weights(args.weights)
-    model.load_weights("./result/weights-08.h5")
+    model.load_weights("./model/weights-08.h5")
 
     pred(model=eval_model, data=(x_test, y_test))
 
-    # model = eval_model
-    # y_pred, x_recon = model.predict(x_test, batch_size=args.batch_size)
-    #
-    # a = np.argmax(y_pred, 1)
-    # # a.tolist()
-    # # print(a)
-    # ssConvertMap = {0: 'I', 1: 'O', 2: 'M'}
-    # result = []
-    # for x in range(len(a)):
-    #     result.append(ssConvertMap[a[x]])
-    # result1 = ''.join(result)
-    # # return ''.join(result)
-    # # print(result1 + '\n\n\n')
-    #
-    # fasta = './data/test.txt'
-    # with open(fasta) as get_fasta:
-    #     score_dataset = []
-    #     temp = get_fasta.readline()
-    #     pdb_id = ""
-    #     index = 0
-    #     while temp:
-    #         if (temp[0] == ">"):
-    #             pdb_id = temp[1:].strip()
-    #             temp = get_fasta.readline()
-    #             continue
-    #         score_line = []
-    #         for i in temp:
-    #             if (i != '\n'):
-    #                 score_line.append(result[index])
-    #                 index += 1
-    #         score_dataset.append(score_line)
-    #         temp = get_fasta.readline()
-    #     y_predscore = score_dataset
-    #     print(y_predscore)
-    #
-    #     fw = open( "result2.txt", "a")
-    #     f = open(fasta, "r")
-    #     l = f.readline()
-    #     obs_seq = ""
-    #     count = 0
-    #     while l:
-    #         if l[0] == ">":
-    #             fw.write(l[0:7] + "|seq_len" + str(len(obs_seq)) + "\n")
-    #         if l[0] != ">" and l != "\n":
-    #             obs_seq = l.strip()
-    #             fw.write("seq:" + obs_seq + "\n")
-    #             # # y_predscore[count]
-    #             # result1 = ''.join(y_predscore[count])
-    #             # count = count + 1
-    #             # fresult = []
-    #             fw.write("pre:")
-    #             for i in y_predscore[count]:
-    #                 fw.write(i)
-    #             fw.write("\n")
-    #             count = count + 1
-    #         l = f.readline()
-    # fw.close()
-    # #
-    # #
+    
 
