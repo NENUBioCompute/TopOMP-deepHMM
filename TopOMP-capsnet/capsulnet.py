@@ -10,15 +10,7 @@ K.set_image_data_format('channels_last')
 
 
 def CapsNet(input_shape, n_class, routings, batch_size):
-    """
-    A Capsule Network on MNIST.
-    :param input_shape: data shape, 3d, [width, height, channels]
-    :param n_class: number of classes
-    :param routings: number of routing iterations
-    :param batch_size: size of batch
-    :return: Two Keras Models, the first one used for training, and the second one for evaluation.
-            `eval_model` can also be used for training.
-    """
+    
     x = layers.Input(shape=input_shape, batch_size=batch_size)
     # print(x.shape)
     getindicelayer1 = Lambda(lambda x: x[:, :, :20])
